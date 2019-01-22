@@ -68,6 +68,7 @@ public class TestController {
 	
 	@RequestMapping("/type")
 	public String test7() {
+		String str = "学习git 时测试用.";
 		testService.TestNull();
 		return "";
 	}
