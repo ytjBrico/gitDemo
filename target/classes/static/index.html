@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>华安统一登录平台</title>
+<link rel="stylesheet" href="styles/index/index.css">
+</head>
+<body>
+	<div id="wrapper">
+		<section class="login_logo">
+			<img alt="华安logo" src="images/logo.gif">
+		</section>
+		<section class="login_backImg">
+			<img alt="背景图片" src="images/single_random_login_bg1.jpg" width="100%">
+		</section>
+		<section class="login_wrapper">
+			<header class="login_header">
+				<div class="h_s1">用户登录</div>
+				<span class="h_s2"></span> 
+				<div class="h_s3">用户注册</div>
+			</header>
+			<div class="login_body">
+				<input type="text" id="userName" placeholder="邮箱/用户名" required autocomplete="off">
+				<input type="password" id="passWord" placeholder="密码" required autocomplete="off">
+				<input type="text" id="vCode" placeholder="验证码" required autocomplete="off">
+			</div>
+			<footer class="login_sub">
+				<a href="#" id="log_act">登 录</a>
+				<a href="#" id="forget_psd">忘记密码?</a>
+			</footer>
+		</section>
+		<section class="login_footer">
+            <p>版权所有@华安财产保险股份有限公司 未经许可不得复制、转载或摘编，违者必究!</p>
+            <p>Copyright @ SINOSAFE GENERAL INSURANCE CO.,LTD. All Rights Reserved</p>
+        </section>
+	</div>
+</body>
+<script type="text/javascript" src="scripts/jquery-3.3.1.min.js"></script>
+<script type="module">
+    import ('./js/index/index.js').then(res =>{
+       	res.init($('#wrapper')); 
+    });
+</script>
+</html>
