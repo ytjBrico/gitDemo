@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="gov.szmqs.pacsesc.dao.mapper.EcsMgrPublicMapper" >
+
+	<select id="queryPubListByCusId" parameterType="gov.szmqs.pacsesc.pojo.dto.MgrPublicDTO" resultType="gov.szmqs.pacsesc.pojo.dto.MgrPublicDTO">
+		SELECT 
+			art_id 	as        artId,		
+		    art_topic as      artTopic,	
+		    art_type as 	  artTypeCode,	 	
+		    art_label as	  artLabelCode,	 	
+		    belong_city as	  belongCityCode,	 	
+		    art_status as	  artStatusCode,	 	
+		    art_content as    artContent,
+		    created_by as     createdBy,	
+		    date_created as   dateCreated,
+		    updated_by as     updatedBy,	
+		    date_updated as   dateUpdated
+		FROM ecs_mgr_public
+		WHERE customer_id = #{customerId}
+		<if test="artTopic != null and artTopic != ''">
+	 		and art_topic like '%'||#{art_topic}||'%'
+	 	</if>
+		<if test="artType != null and artType != '' and artType != 'all'">
+	 		and art_type = #{artTypeCode}
+	 	</if>
+		<if test="artStatus != null and artStatus != '' and artStatus != 'all'">
+	 		and art_status = #{artStatusCode}
+	 	</if>
+		<if test="queryStrTime != null and queryStrTime != ''">
+			<![CDATA[ 
+	 			and date_created >= str_to_date(#{queryStrTime}, '%Y-%m-%d')
+	 		]]>
+	 	</if>
+		<if test="queryEndTime != null and queryEndTime != ''">
+			<![CDATA[ 
+	 			and date_created <= ADDDATE(str_to_date('2019-03-29', '%Y-%m-%d'), INTERVAL 1 DAY)
+	 		]]>
+	 	</if>
+	</select>
+	
+	<insert id="addPublic" parameterType="gov.szmqs.pacsesc.pojo.dto.MgrPublicDTO">
+		insert into ecs_mgr_public
+		(customer_id, customer_name, art_topic, art_type, art_label, belong_city, 
+			art_status, art_content, created_by, updated_by)
+		values
+		(#{customerId},#{customeName},#{artTopic}, #{artTypeCode}, #{artLabelCode}, #{belongCityCode}, 
+			#{artStatusCode}, #{artContent}, #{customerId}, #{customerId})	
+	</insert>
+
+	<update id="updatePublic" parameterType="gov.szmqs.pacsesc.pojo.dto.MgrPublicDTO">
+		update ecs_mgr_public 
+		set
+		  <if test="artTopic != null and artTopic != ''">art_topic = #{artTopic},</if>
+		  <if test="artTypeCode != null and artTypeCode != ''">art_type = #{artTypeCode},</if>
+		  <if test="artLabelCode != null and artLabelCode != ''">art_label = #{artLabelCode},</if>
+		  <if test="belongCityCode != null and belongCityCode != ''">belong_city = #{belongCityCode},</if>
+		  <if test="artStatusCode != null and artStatusCode != ''">art_status = #{artStatusCode},</if>
+		  <if test="artContent != null and artContent != ''">art_content = #{artContent},</if>
+		  <if test="customerId != null and customerId != ''">updated_by = #{customerId},</if>
+		  date_updated = DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
+		WHERE id = #{artId}
+	</update>
+
+	
+
+</mapper>
